@@ -1,0 +1,1 @@
+vim -c ":s/,/\r/g" -c ":w input.txt" -c ':q!' input-original.txt

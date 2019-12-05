@@ -1,5 +1,3 @@
-const numberListFromInput = require('../utils/utils');
-
 function calculateFuelRequirement(mass){
    return Math.floor(mass / 3) - 2;
 }
