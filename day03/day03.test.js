@@ -1,4 +1,4 @@
-const { WireSegment, getWireSegments, getWireIntersections } = require("./day03");
+const { WireSegment, getWireSegments, getWireIntersections, countStepsToPoint } = require("./day03");
 const { Point } = require("../utils/mathyUtils");
 
 describe('wire segment construction', () => {
@@ -35,7 +35,20 @@ describe('wire segment intersection', () => {
     let ws2 = new WireSegment("R3", new Point(-1, 10));
 
     expect(ws1.intersection(ws2)).toStrictEqual(new Point(0, 0));
-  })
+  });
+});
+
+describe('point on segment', () => {
+  it('is true when the point is on the segment', () => {
+    let ws = new WireSegment("D3", new Point(0, 0));
+    expect(ws.pointOnSegment(new Point(0, -1))).toBe(true);
+  });
+
+  it('is false when the point is not on the segment', () => {
+    let ws = new WireSegment("D3", new Point(0, 0));
+    expect(ws.pointOnSegment(new Point(0, 1))).toBe(false);
+  });
+
 });
 
 
@@ -57,6 +70,27 @@ describe('getWireIntersections', () => {
     let expected_intersections = [new Point(0, 1), new Point(-46, 12)]
 
     expect(getWireIntersections(wire1, wire2)).toStrictEqual(expected_intersections);
-  })
+  });
+});
+
+describe('countStepsToPoint', () => {
+  it('does', () => {
+    let wire = [ new WireSegment("U3", new Point(0, 0)),
+                  new WireSegment("L3", new Point(0, 3)) ]
+    let point = new Point(-1, 3);
+
+    expect(countStepsToPoint(wire, point)).toBe(4);
+  });
+
+  it('stops counting when it hits the target point', () => {
+    let wire = [ new WireSegment("U3", new Point(0, 0)),
+                  new WireSegment("L3", new Point(0, 3)),
+                  new WireSegment("D3", new Point(-3, 3))
+                 ]
+    let point = new Point(-1, 3);
+
+    expect(countStepsToPoint(wire, point)).toBe(4);
+  });
+
 });
 

@@ -1,29 +1,28 @@
-const { Point, checkLineIntersection } = require("../utils/mathyUtils");
+const { Point, manhattanDistance, checkLineIntersection } = require("../utils/mathyUtils");
 
 class WireSegment { 
     constructor(wireCode, start){
-        const direction = wireCode[0];
-        const mag = Number(wireCode.slice(1));
+        this.direction = wireCode[0];
+        this.magnitude = Number(wireCode.slice(1));
 
         this.start = new Point(start.x, start.y);
-        this.direction = direction;
 
         this.end = new Point();
-        switch (direction) {
+        switch (this.direction) {
             case "L":
-                this.end.x = this.start.x - mag;
+                this.end.x = this.start.x - this.magnitude;
                 this.end.y = this.start.y;
                 break;
             case "R":
-                this.end.x = this.start.x + mag;
+                this.end.x = this.start.x + this.magnitude;
                 this.end.y = this.start.y;
                 break;
             case "U":
-                this.end.y = this.start.y + mag;
+                this.end.y = this.start.y + this.magnitude;
                 this.end.x = this.start.x;
                 break;
             case "D":
-                this.end.y = this.start.y - mag;
+                this.end.y = this.start.y - this.magnitude;
                 this.end.x = this.start.x;
                 break;
             default: 
@@ -45,16 +44,16 @@ class WireSegment {
     pointOnSegment(point){
         switch(this.direction) {
             case "L":
-                return (point.y === this.start.y) && (this.end.x <= point.x <= this.start.x)
+                return (point.y === this.start.y) && (this.end.x <= point.x) && (point.x <= this.start.x);
                 break;
             case "R":
-                return (point.y === this.start.y) && (this.start.x <= point.x <= this.end.x)
+                return (point.y === this.start.y) && (this.start.x <= point.x) && (point.x <= this.end.x);
                 break;
             case "U":
-                return (point.x === this.start.x) && (this.start.y <= point.y <= this.end.y)
+                return (point.x === this.start.x) && (this.start.y <= point.y) && (point.y <= this.end.y);
                 break;
             case "D":
-                return (point.x === this.start.x) && (this.end.y <= point.y <= this.start.y)
+                return (point.x === this.start.x) && (this.end.y <= point.y) &&  (point.y <= this.start.y);
                 break;
             default: 
                 throw "wtf man"
@@ -86,12 +85,16 @@ function getWireIntersections(wire1, wire2){
 }
 
 function countStepsToPoint(wire, point){
-    // wire.forEach((segment) => {
-    //     if 
-
-    // })
-
+    let stepCount = 0;
+    wire.forEach((segment) => {
+        if(segment.pointOnSegment(point)){
+            stepCount += manhattanDistance(segment.start, point);
+        } else {
+            stepCount += segment.magnitude;
+        }
+    });
+    return stepCount;
 }
 
 
-module.exports = { Point, WireSegment, getWireSegments, getWireIntersections };
+module.exports = { Point, WireSegment, getWireSegments, getWireIntersections, countStepsToPoint };
