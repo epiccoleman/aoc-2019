@@ -1,18 +1,32 @@
-const { calculateFuelRequirement, calculateFuelRequirementPart2 } = require("./day01");
-const { numberListFromInput } = require('../utils/utils');
-
-const DAY_NUMBER = 01;
+const { getWireIntersections, getWireSegments } = require("./day03");
+const { Point, manhattanDistance } = require("../utils/mathyUtils");
+const { stringListFromInput } = require("../utils/utils");
 
 function result1() {
-    const input = numberListFromInput("./input.txt");
+    const input = stringListFromInput("./input.txt");
+    const wire1Turns = input[0].split(',');
+    const wire2Turns = input[1].split(',');
 
-    return input.reduce((acc, current) => (acc + calculateFuelRequirement(current)), 0);
+    const wire1 = getWireSegments(wire1Turns);
+    const wire2 = getWireSegments(wire2Turns);
+
+    const intersections = getWireIntersections(wire1, wire2);
+
+    let minimumDistance = 1000000;
+    let centralPortLocation = new Point(0,0);
+
+    intersections.forEach((intersection) => {
+        let distance = manhattanDistance(intersection, centralPortLocation);
+        if(distance < minimumDistance){
+            minimumDistance = distance;
+        }
+    });
+
+    return minimumDistance;
 }
 
 function result2() {
-    const input = numberListFromInput("./input.txt");
-
-    return input.reduce((acc, current) => (acc + calculateFuelRequirementPart2(current)), 0);
+    return "";
 }
 
 function main(){

@@ -1,4 +1,5 @@
-const { WireSegment, Point, getWireSegments, getWireIntersections } = require("./day03");
+const { WireSegment, getWireSegments, getWireIntersections } = require("./day03");
+const { Point } = require("../utils/mathyUtils");
 
 describe('wire segment construction', () => {
   it.each`
