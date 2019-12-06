@@ -86,13 +86,15 @@ function getWireIntersections(wire1, wire2){
 
 function countStepsToPoint(wire, point){
     let stepCount = 0;
-    wire.forEach((segment) => {
+    for(let i = 0; i < wire.length; i++){
+        let segment = wire[i];
         if(segment.pointOnSegment(point)){
             stepCount += manhattanDistance(segment.start, point);
+            break;
         } else {
             stepCount += segment.magnitude;
         }
-    });
+    }
     return stepCount;
 }
 
