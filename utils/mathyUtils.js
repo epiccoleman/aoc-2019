@@ -5,6 +5,17 @@ class Point {
     }
 }
 
+class Range {
+    constructor(start = 0, end = 0){
+        this.start = Math.min(start, end);
+        this.end = Math.max(start, end);
+    }
+
+    contains(n) {
+        return (this.start <= n) && (n <= this.end);
+    }
+}
+
 function manhattanDistance(pointA, pointB){
     let xDist = Math.abs(pointA.x - pointB.x);
     let yDist = Math.abs(pointA.y - pointB.y);
@@ -52,4 +63,4 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
     return result;
 };
 
-module.exports = { Point, manhattanDistance, checkLineIntersection };
+module.exports = { Point, manhattanDistance, checkLineIntersection, Range };
