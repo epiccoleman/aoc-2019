@@ -8,7 +8,6 @@ const OPCODES = {
             let target = args[2];
 
             computer.memory[target] = a + b;
-            computer.pc += ( [1].argc + 1 );
         }
     },
     2: {
@@ -36,7 +35,7 @@ const OPCODES = {
         name: "output",
         argc: 1,
         operation: (args, modes, computer) => {
-            let value = computer.memory[args[0]];
+            let value = modes[0] ? args[0] : computer.memory[args[0]];
             computer.output.push(value);
         }
     },
@@ -44,8 +43,10 @@ const OPCODES = {
         name: "jump-if-true", 
         argc: 2,
         operation: (args, modes, computer) => {
-            if(args[0] != 0) {
-                computer.pc = args[1]
+            let a = modes[0] ? args[0] : computer.memory[args[0]];
+            let b = modes[1] ? args[1] : computer.memory[args[1]];
+            if(a !== 0) {
+                computer.pc = b;
             }
         }
     },
@@ -53,21 +54,33 @@ const OPCODES = {
         name: "jump-if-false", 
         argc: 2,
         operation: (args, modes, computer) => {
-
+            let a = modes[0] ? args[0] : computer.memory[args[0]];
+            let b = modes[1] ? args[1] : computer.memory[args[1]];
+            if(a === 0) {
+                computer.pc = b;
+            }
         }
     },
     7: {
         name: "less-than", 
         argc: 3,
         operation: (args, modes, computer) => {
+            let a = modes[0] ? args[0] : computer.memory[args[0]];
+            let b = modes[1] ? args[1] : computer.memory[args[1]];
+            let target = args[2];
 
+            computer.memory[target] = (a < b) ? 1 : 0;
         }
     },
     8: {
         name: "equals", 
         argc: 3,
         operation: (args, modes, computer) => {
+            let a = modes[0] ? args[0] : computer.memory[args[0]];
+            let b = modes[1] ? args[1] : computer.memory[args[1]];
+            let target = args[2];
 
+            computer.memory[target] = (a == b) ? 1 : 0;
         }
     },
     99: {

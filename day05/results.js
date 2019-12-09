@@ -13,9 +13,14 @@ function result1() {
 }
 
 function result2() {
-    // const input = numberListFromInput("./input.txt");
+    const initialMemory = numberListFromInput("./input.txt");
 
-    // return input.reduce((acc, current) => (acc + calculateFuelRequirementPart2(current)), 0);
+    const input = [5];
+    const alliedMasterComputer = new IntcodeComputer(initialMemory, input);
+    alliedMasterComputer.execute();
+
+    console.log(alliedMasterComputer.output)
+    return alliedMasterComputer.output[alliedMasterComputer.output.length - 1];
 }
 
 function main(){
