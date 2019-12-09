@@ -1,7 +1,7 @@
 const OPCODES = {
     1: {
         name: "add",
-        args: 3,
+        argc: 3,
         operation: (args, computer) => {
             let a = args[0];
             let b = args[1];
@@ -12,7 +12,7 @@ const OPCODES = {
     },
     2: {
         name: "multiply",
-        args: 3,
+        argc: 3,
         operation: (args, computer) => {
             let a = args[0];
             let b = args[1];
@@ -23,7 +23,7 @@ const OPCODES = {
     },
     3: {
         name: "input",
-        args: 1,         
+        argc: 1,         
         operation: (args, computer) => {
             let input = computer.input.shift();
             let target = args[0];
@@ -33,7 +33,7 @@ const OPCODES = {
     },
     4: {
         name: "output",
-        args: 1,
+        argc: 1,
         operation: (args, computer) => {
             let value = computer.memory[args[0]];
             computer.output.push(value);
@@ -41,7 +41,7 @@ const OPCODES = {
     },
     99: {
         name: "halt",
-        args: 0,
+        argc: 0,
         operation: () => {}
     }
 };

@@ -10,33 +10,40 @@ class IntcodeComputer {
 
     execute(){
         let pc = 0; 
+        // let halted = false;
         while( ! ( pc >= this.memory.length ) ){
-            let opcode = this.getInstruction(pc)
-            if (opcode != 1 && opcode != 2 && opcode != 99) { throw "bad opcode"};
-            if (opcode == 99) break;
+            let instruction = this.memory[this.pc];
+            let opcodeNum = instruction % 100;
+            if (opcodeNum != 1 && opcodeNum != 2 && opcodeNum !=3 && opcodeNum !=4 && opcodeNum != 99) { throw "bad opcodeNum"};
+            if (opcodeNum == 99) return 0;
+            let opcodeStr = String(instruction).padStart(5, "0");
+            let opcode = OPCODES[opcodeNum];
 
-            let a_loc = this.memory[pc+1]
-            let b_loc = this.memory[pc+2]
-            let out_loc = this.memory[pc+3]
+            let unprocessedArgs = this.memory.slice(this.pc+1, this.pc+opcode.argc+1);
 
-            // console.log(`opcode: ${opcode}, a: ${a}, b: ${b}, target: ${target}`)
+            let args = [];
 
-            switch(opcode) {
-                case 1:
-                    this.memory[out_loc] = this.memory[a_loc] + this.memory[b_loc];
-                    break;
-                case 2:
-                    this.memory[out_loc] = this.memory[a_loc] * this.memory[b_loc];
-                    break
+            if (opcodeNum >= 3 ) {
+                // in or out
+                args[0] = unprocessedArgs[0];
+            } 
+            else {
+                // add or mul
+                let param1Mode = Number(opcodeStr[2]);
+                let param2Mode = Number(opcodeStr[1]);
+
+                args[0] = param1Mode ? unprocessedArgs[0] : this.memory[unprocessedArgs[0]];
+                args[1] = param2Mode ? unprocessedArgs[1] : this.memory[unprocessedArgs[1]];
+                args[2] = unprocessedArgs[2];
             }
 
-            pc += 4;
+            console.log(`operation ${opcode.name} with args ${args}`);
+            opcode.operation(args, this);
+
+            this.pc += ( opcode.argc + 1 );
         }
+            return 0;
     }
-
-    // processInstruction(position){
-    //     let opcode = this.memory[position];
-
-    // }
 }
 
+module.exports = { IntcodeComputer };

@@ -1,13 +1,20 @@
-const {} = require("./intcode");
+const { IntcodeComputer } = require("./intcode");
 
-describe('checkPassword', () => {
- it.each`
- password | valid
- ${111111} | ${true}
- ${1111111} | ${false}
- ${11111} | ${false}
- `('has six digits',
- ({password, valid}) => {
-   expect(checkPassword(password, new Range(100001, 200000))).toBe(valid);
- });
+describe('execute', () => {
+  it('executes a single instruction correctly', () => {
+    let computer = new IntcodeComputer([1002,4,3,4,33]);
+    let returnCode = computer.execute();
+
+    expect(computer.pc).toBe(4);
+    expect(returnCode).toBe(0);
+    expect(computer.memory).toStrictEqual([1002,4,3,4,99]);
+  });
+
+  it('executes legacy intcode correctly', () => { 
+    let computer = new IntcodeComputer([1,1,1,4,99,5,6,0,99]);
+    computer.execute();
+
+    expect(computer.pc).toBe(8);
+    expect(computer.memory).toStrictEqual([30,1,1,4,2,5,6,0,99]);
+  })
 });
