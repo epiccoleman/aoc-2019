@@ -1,5 +1,7 @@
 const { OrbitGraph } = require("./day06");
 const { stringListFromInput } = require("../utils/utils");
+const Graph = require("graphlib").Graph;
+const dijkstra = require("graphlib").alg.dijkstra;
 
 function result1() {
     let input = stringListFromInput("./input.txt");
@@ -9,7 +11,23 @@ function result1() {
 }
 
 function result2() {
-    return 0;
+    //basically, same as before, but i need to use an undirected graph and i'm not refactoring all that stuff
+    let input = stringListFromInput("./input.txt");
+    let orbitGraph = new Graph({directed: false});
+
+    input.forEach((edgeStr) => {
+        let edge = edgeStr.split(")");
+        orbitGraph.setEdge(edge[0], edge[1]);
+    });
+    
+    let youParent = orbitGraph.predecessors("YOU")[0];
+    let santaParent = orbitGraph.predecessors("SAN")[0];
+
+    // https://github.com/dagrejs/graphlib/issues/42
+    let distanceMap = dijkstra(orbitGraph, youParent, null, function(v) { return orbitGraph.nodeEdges(v) });
+
+    return distanceMap[santaParent].distance;
+    
 }
 
 function main(){

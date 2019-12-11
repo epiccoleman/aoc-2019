@@ -20,22 +20,22 @@ class OrbitGraph {
         return root;
     }
 
-    countStepsToDestination(node, destination, acc = 0){
-        if(node == destination) return 0;
+    countStepsToRoot(node, acc = 0){
+        if(node == this.root) return 0;
     
         let parent = this.graph.predecessors(node)[0];
-        if(parent === destination){
+        if(parent === this.root){
             return acc + 1;
         } else {
             acc += 1;
-            return this.countStepsToDestination(parent, destination, acc);
+            return this.countStepsToRoot(parent, acc);
         }
     }
     
     countOrbits(){
         let orbitCount = 0;
         this.graph.nodes().forEach((node) => {
-            orbitCount += this.countStepsToDestination(node, this.root);
+            orbitCount += this.countStepsToRoot(node);
         });
         return orbitCount;
     }

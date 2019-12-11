@@ -24,7 +24,7 @@ describe("OrbitGraph", () => {
     ];
     let orbitGraph = new OrbitGraph(testInput);
 
-    expect(orbitGraph.countStepsToDestination(node, "COM")).toBe(stepsToRoot);
+    expect(orbitGraph.countStepsToRoot(node)).toBe(stepsToRoot);
   });
 
   describe("countOrbits", () => {
