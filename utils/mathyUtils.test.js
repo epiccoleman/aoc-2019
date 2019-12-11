@@ -1,4 +1,4 @@
-const { Range, Point } = require('./mathyUtils');
+const { Range, Point, permutations } = require('./mathyUtils');
 
 describe('Point', () => {
     it('is constructed with x and y', () => {
@@ -45,4 +45,16 @@ describe('Range', () => {
     ({number, inRange}) => {
       expect(new Range(10, 12).contains(number)).toBe(inRange);
     });
+});
+
+it.each`
+    sequence | permCount
+    ${[1, 2]} | ${2}
+    ${[1, 2, 3]} | ${6}
+    ${[1, 2, 3, 4]} | ${24}
+    ${[1, 2, 3, 4, 5]} | ${120}
+
+    `('permutations gets the correct number of perms for a given input', 
+    ({sequence, permCount}) => {
+        expect(permutations(sequence).length).toBe(permCount);
 });
