@@ -294,3 +294,15 @@ describe('Opcode 8: equals', () => {
     expect(computer.memory[0]).toBe(0);
   });
 });
+
+describe("Opcode 99: halt", () => {
+  it("sets the computer's halted property to true", () => {
+    let haltOpcode = OPCODES[99];
+    let modes = [];
+    let computer = { memory: [], halted: false}
+
+    haltOpcode.operation([], [], computer);
+
+    expect(computer.halted);
+  })
+});

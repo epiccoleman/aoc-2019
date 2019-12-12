@@ -6,12 +6,13 @@ class IntcodeComputer {
         this.input = input;
         this.output = output;
         this.pc = 0;
+        this.halted = false;
+        this.paused = false;
     }
 
     execute(){
-        this.pc = 0; 
         // let halted = false;
-        while( ! ( this.pc >= this.memory.length ) ){
+        while( ! ( this.halted || this.paused ) ){
             //grab instruction from memory
             let instruction = this.memory[this.pc];
             let opcodeNum = instruction % 100;
