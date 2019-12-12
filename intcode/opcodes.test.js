@@ -66,6 +66,18 @@ describe('Opcode 3: input', () => {
     expect(computer.input).toStrictEqual([]);
     expect(computer.memory[0]).toBe(123);
   });
+
+  it('when there is nothing in input it pauses the computer', () => {
+    let inputOpcode = OPCODES[3];
+
+    let args = [0];
+    let modes = [];
+    let computer = {memory: [], input: []};
+
+    inputOpcode.operation(args, modes, computer);
+
+    expect(computer.paused).toBe(true);
+  });
 });
 
 describe('Opcode 4: output', () => {

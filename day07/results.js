@@ -9,8 +9,10 @@ function result1() {
 }
 
 function result2() {
-    return 'buttz';
+    const input = numberListFromInput("./input.txt");
+    const ampController = new AmpController(input);
 
+    return ampController.testAllPhaseSequencesFeedbackMode().bestSignal;
 }
 
 function main(){

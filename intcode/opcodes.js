@@ -25,7 +25,7 @@ const OPCODES = {
         name: "input",
         argc: 1,         
         operation: (args, _, computer) => {
-            if (computer.input.length === 0) throw "Input instruction attempted with empty input";
+            if (computer.input.length === 0) { computer.paused = true; return; }
             let input = computer.input.shift();
             let target = args[0];
 

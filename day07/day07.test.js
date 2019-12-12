@@ -35,7 +35,6 @@ describe("AmpController", () => {
     let ampController = new AmpController(program);
     
     let expectedSignal = 139629729;
-
     expect(ampController.testPhaseSequenceFeedbackMode(phaseSequence)).toBe(expectedSignal);
   });
 

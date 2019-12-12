@@ -11,8 +11,6 @@ describe('execute', () => {
     expect(computer.halted);
   });
 
-  // it doesn't increment pc if the executed instruction did.
-
   it('executes legacy intcode correctly', () => { 
     let computer = new IntcodeComputer([1,1,1,4,99,5,6,0,99]);
     let returnCode = computer.execute();
@@ -23,14 +21,17 @@ describe('execute', () => {
     expect(computer.halted);
   });
 
-  it('pauses if it reaches an input with nothing in the queue, and can be restarted', () => {
+  it('pauses if it reaches an input with nothing in the input queue, and can be restarted', () => {
     let computer = new IntcodeComputer([3, 0, 99]);
-    let returnCode = computer.execute();
+    computer.execute();
+    expect(computer.paused).toBe(true);
+    expect(computer.pc).toBe(0);
 
-    expect(computer.pc).toBe(8);
-    expect(returnCode).toBe(0);
-    expect(computer.memory).toStrictEqual([30,1,1,4,2,5,6,0,99]);
+    computer.receiveInput([123]);
+    computer.execute();
+
+    expect(computer.pc).toBe(2);
+    expect(computer.memory).toStrictEqual([123, 0, 99]);
+    expect(computer.halted);
   });
-
-  // there are some other test cases in day 5 if we need more
 });
