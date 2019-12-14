@@ -14,14 +14,13 @@ class IntcodeComputer {
         while( ! ( this.halted || this.paused ) ){
             //grab instruction from memory
             let instruction = this.memory[this.pc];
+            let modes = IntcodeComputer.getInstructionModes(instruction);
+
             let opcodeNum = instruction % 100;
-
-            if (opcodeNum < 1 && opcodeNum > 8 && opcodeNum != 99) { throw "bad opcodeNum" };
-
-            let opcodeStr = String(instruction).padStart(5, "0");
-            let modes = opcodeStr.slice(0,3).split("").reverse().map((i) => Number(i)); //gross, but get array of modes for each arg
+            if (!(opcodeNum in OPCODES)) { throw "Tried to run a non-existent opcode" };
 
             let opcode = OPCODES[opcodeNum];
+
             let args = this.memory.slice(this.pc+1, this.pc+opcode.argc+1);
             let pcBeforeOp = this.pc;
 
@@ -35,6 +34,11 @@ class IntcodeComputer {
 
     receiveInput(input){
         this.paused = false; this.input.push(...input)
+    }
+
+    static getInstructionModes(instruction){
+        let instructionStr = String(instruction).padStart(5, "0");
+        return instructionStr.slice(0,3).split("").reverse().map(Number); //gross, but get array of modes for each arg
     }
 }
 

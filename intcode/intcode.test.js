@@ -34,4 +34,23 @@ describe('execute', () => {
     expect(computer.memory).toStrictEqual([123, 0, 99]);
     expect(computer.halted);
   });
+
+  it('throws if asked to run a bad opcode', () => {
+    let computer = new IntcodeComputer([21347, 0, 99]);
+    expect(() => { computer.execute() }).toThrow("Tried to run a non-existent opcode");
+  });
 });
+
+describe('getInstructionModes', () => {
+  it.each`
+  instruction | modes
+  ${"203"} | ${[2, 0, 0]}
+  ${"3"} | ${[0, 0, 0]}
+  ${"102"} | ${[1, 0, 0]}
+  ${"1002"} | ${[0, 1, 0]}
+  ${"20101"} | ${[1, 0, 2]}
+  `('returns $modes for $instruction',
+  ({instruction, modes}) => {
+    expect(IntcodeComputer.getInstructionModes(instruction)).toStrictEqual(modes);
+  });
+ });
