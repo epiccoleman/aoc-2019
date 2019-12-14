@@ -50,7 +50,7 @@ function result2() {
 
 function main(){
     console.log("=====================================================");
-    console.log("Results for Day 1:");
+    console.log("Results for Day 3:");
     console.log(`Part 1: ${result1()}`)
     console.log(`Part 2: ${result2()}`)
 }
