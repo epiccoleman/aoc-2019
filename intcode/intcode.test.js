@@ -54,3 +54,47 @@ describe('getInstructionModes', () => {
     expect(IntcodeComputer.getInstructionModes(instruction)).toStrictEqual(modes);
   });
  });
+  
+describe('getMemory', () => {
+  //0
+  it('returns the value at the given position in position mode', () => {
+    let computer = new IntcodeComputer([3, 0, 99]);
+    let arg = 2; 
+    let mode = 0;
+
+    expect(computer.getMemory(arg, mode)).toBe(99);
+  });
+
+  //1
+  it('returns the value itself in immediate mode', () => {
+    let computer = new IntcodeComputer([3, 0, 99]);
+    let arg = 2; 
+    let mode = 1;
+
+    expect(computer.getMemory(arg, mode)).toBe(2);
+  });
+
+  //
+  it('returns the value at the given position adjusted by the relative base in relative mod', () => {
+    let computer = new IntcodeComputer([3, 0, 99]);
+    let arg = 2; 
+    let mode = 2;
+    computer.relativeBase = -2;
+    
+    expect(computer.getMemory(arg, mode)).toBe(3);
+  });
+  
+});
+
+// describe('setMemory', () => {
+//   it('sets the value at the given position in position mode', () => {
+    
+//   });
+ 
+//   it('throws if called with immediate mode', () => {
+
+//   });
+
+//   it('sets the value at the given position adjusted by the relative base in relative mode')
+
+// })
