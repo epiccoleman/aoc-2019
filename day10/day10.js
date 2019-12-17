@@ -5,7 +5,7 @@ function enumerateAsteroids(input){
 
     for(let y = 0; y < input.length; y++){
         for(let x = 0; x < input[0].length; x++){
-            if(input[y][x] === ASTEROID) asteroids.push([x, -y]);
+            if(input[y][x] === ASTEROID) asteroids.push([x, y]);
         }
     }
 
@@ -40,7 +40,8 @@ function vaporizeAsteroids(position, asteroids){
     for(asteroid of adjustedAsteroids){
         let [x, y] = asteroid.adjusted;
         // let angle = Math.atan2(x, y);
-        let angle = (Math.round(Math.atan2(x, y) * 1000) / 1000) - Math.PI;
+        let angle = (Math.round(Math.atan2(x, y) * 10000) / 10000);
+        angle = angle < 0 ? angle + Math.PI * 2 : angle;
         // console.log(`adjusted: ${asteroid.adjusted[0]}, ${asteroid.adjusted[1]}`)
         // console.log(`original: ${asteroid.original[0]}, ${asteroid.original[1]}`)
         // console.log(angle)
@@ -53,30 +54,35 @@ function vaporizeAsteroids(position, asteroids){
         }
     }
 
-    for(angle in asteroidMap){
+    for(let angle in asteroidMap){
         asteroidMap[angle].sort((a, b) => a.distance - b.distance);
     }
 
     // console.log(asteroidMap);
     let angles = Object.keys(asteroidMap).sort((a, b) => a - b); // should come back sorted? 
-    let partition = angles.findIndex((n) => n >= 0);
+    console.log(angles);
+    // let partition = angles.findIndex((n) => n >= 0);
     // console.log(angles.length);
-    angles = [ ...angles.slice(partition), ...angles.slice(0, partition) ];
+    // angles = [ ...angles.slice(partition), ...angles.slice(0, partition) ];
     // console.log(angles);
 
     let destroidAstroids = []
     // console.log(`Expect this many iterations: ${asteroidCount} over ${angles.length} angles`);
-    for(let i = 0; i < asteroidCount ; i++){
-        let angle = angles[i % angles.length];
+    // for(let i = 0; i < asteroidCount ; i++){
+    let angle = 0;
+    // while(destroidAstroids.length < asteroidMapCount - 1);
+        
+        
 
-        // console.log(`iteration ${i} using angle ${angle}`);
-        // console.log(asteroidMap[angle])
+    //     // console.log(`iteration ${i} using angle ${angle}`);
+    //     // console.log(asteroidMap[angle])
 
-        destroyed = asteroidMap[angle].shift()
-        // console.log(destroyed);
-        destroidAstroids.push(destroyed);
-        // console.log(asteroidMap[angle])
-    }
+    //     destroyed = asteroidMap[angle].shift()
+    //     // console.log(destroyed);
+    //     destroidAstroids.push(destroyed);
+    //     // console.log(asteroidMap[angle])
+    //     angle += .00001;
+    // }
 
     return destroidAstroids;
 }
