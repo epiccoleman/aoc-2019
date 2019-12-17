@@ -12,6 +12,16 @@ describe('Point', () => {
         expect(point.x).toBe(0);
         expect(point.y).toBe(0);
     });
+
+    it('can be added to another point', () => {
+        let pointA = new Point(1, -1);
+        let pointB = new Point(3, -1);
+
+        pointA.add(pointB);
+
+        expect(pointA.x).toBe(4);
+        expect(pointA.y).toBe(-2);
+    })
 });
 
 describe('Range', () => {
