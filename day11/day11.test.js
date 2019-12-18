@@ -8,6 +8,6 @@ describe("paint", () => {
         hullRobot.position = new Point(3, 4);
         hullRobot.paint(1);
 
-        expect(hullRobot.board[3][4]).toBe(1);
+        expect(hullRobot.board[hullRobot.position.toString()]).toBe(1);
     });
 });
