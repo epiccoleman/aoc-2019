@@ -1,24 +1,33 @@
-const { IntcodeComputer } = require(`${__dirname}/../intcode/intcode`);
+const { HullRobot } = require(`${__dirname}/day11`);
 const { numberListFromInput } = require(`${__dirname}/../utils/utils`);
 
 function result1() {
-    const initialMemory = numberListFromInput(`${__dirname}/input.txt`);
+    const program = numberListFromInput(`${__dirname}/input.txt`);
 
-    const input = [1];
-    const skynet = new IntcodeComputer(initialMemory, input);
-    skynet.execute();
+    const wallE = new HullRobot(program);
 
-    return skynet.output;
+    return wallE.countVisitedSquares();
 }
 
 function result2() {
-    const initialMemory = numberListFromInput(`${__dirname}/input.txt`);
+    const program = numberListFromInput(`${__dirname}/input.txt`);
 
-    const input = [2];
-    const SHODAN = new IntcodeComputer(initialMemory, input);
-    SHODAN.execute();
+    const eve = new HullRobot(program);
 
-    return SHODAN.output;
+    eve.getIdentifier();
+    eve.printBoard();
+
+    console.log("output a little messed up, but vim shaped it up into this:")
+    console.log(
+`
+###..####.###..#..#.####.#..#.###...##...
+#..#.#....#..#.#..#....#.#..#.#..#.#..#...
+###..###..#..#.#..#...#..#..#.#..#.#......
+#..#.#....###..#..#..#...#..#.###..#.....
+#..#.#....#....#..#.#....#..#.#....#..#
+###..#....#.....##..####..##..#.....##..
+`
+    )
 }
 
 function main(){
