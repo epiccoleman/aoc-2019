@@ -52,15 +52,19 @@ class IntcodeComputer {
     getMemory(position, mode){
         switch(mode) {
             case 0: //position mode
-                return this.memory[position];
+                return this.memory[position] ? this.memory[position] : 0;
                 break;
             case 1: //immediate mode
                 return position;
                 break;
             case 2: //relative mode
-                return this.memory[position + this.relativeBase];
+                return this.memory[position + this.relativeBase] ? this.memory[position + this.relativeBase] : 0;
                 break;
         }
+    }
+
+    flushOutput() { 
+        this.output = [];
     }
 
     static getInstructionModes(instruction){
