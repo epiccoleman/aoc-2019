@@ -12,6 +12,7 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
-    "graphlib": "^2.1.8"
+    "graphlib": "^2.1.8",
+    "mathjs": "^6.2.5"
   }
 }
